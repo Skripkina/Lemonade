@@ -98,7 +98,7 @@ fun MakeLemonade(modifier: Modifier = Modifier) {
             ){
                     Image(
                         painter = imageResource,
-                        contentDescription = "1",
+                        contentDescription = stringResource,
                         contentScale = ContentScale.Crop,
                         modifier = modifier
                             .clickable( onClick = { result++})
