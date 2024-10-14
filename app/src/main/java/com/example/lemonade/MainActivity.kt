@@ -58,14 +58,16 @@ class MainActivity : ComponentActivity() {
 fun MakeLemonade(modifier: Modifier = Modifier) {
 
     var result by remember { mutableStateOf(1) }
+    var countSqueeze by remember { mutableStateOf(0) }
 
     val imageResource: Painter
     val stringResource: String
 
-    when (result%4) {
+    when (result) {
         1 -> {
             imageResource = painterResource(R.drawable.lemon_tree);
-            stringResource = stringResource(R.string.lemon_tree) }
+            stringResource = stringResource(R.string.lemon_tree)
+            countSqueeze = (2..4).random()}
         2 -> {
             imageResource = painterResource(R.drawable.lemon_squeeze);
             stringResource = stringResource(R.string.lemon_squeeze)}
@@ -76,6 +78,7 @@ fun MakeLemonade(modifier: Modifier = Modifier) {
             imageResource = painterResource(R.drawable.lemon_restart);
             stringResource = stringResource(R.string.lemon_restart); }
     }
+
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -101,7 +104,19 @@ fun MakeLemonade(modifier: Modifier = Modifier) {
                         contentDescription = stringResource,
                         contentScale = ContentScale.Crop,
                         modifier = modifier
-                            .clickable( onClick = { result++})
+                            .clickable( onClick = {
+                                if (result == 2) {
+                                    countSqueeze--
+                                    if (countSqueeze < 2 )
+                                    result = 3
+                                } else {
+                                    if (result < 4) {
+                                        result++
+                                    } else {
+                                        result = 1
+                                    }
+                                }
+                            })
                             .clip(RoundedCornerShape(16.dp))
                             .background(Color(0xFFB9F6CA))
                             .padding(32.dp, 16.dp, 32.dp, 16.dp)
